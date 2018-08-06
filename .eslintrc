@@ -2,6 +2,11 @@
   "parser": "babel-eslint",
   "extends": "airbnb",
   "rules": {
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error",
     "react/jsx-filename-extension": 0,
     "react/forbid-prop-types": "off",
     "comma-dangle": 0,
@@ -24,6 +29,8 @@
   },
   "env": {
     "browser": true,
-    "node": true
-  }
+    "node": true,
+    "jest/globals": true
+  },
+  "plugins": ["jest"]
 }
