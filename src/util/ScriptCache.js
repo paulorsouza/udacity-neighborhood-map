@@ -1,3 +1,7 @@
+/** Idea taken from this gist
+https://gist.githubusercontent.com/auser/1d55aa3897f15d17caf21dc39b85b663/raw/2dc3366af5a4afbd15b87b08936c02fe2e6beae2/ScriptCache.js
+*/
+
 import Cache from './Cache';
 
 export default class ScriptCaches {
