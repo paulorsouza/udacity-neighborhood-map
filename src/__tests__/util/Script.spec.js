@@ -1,4 +1,4 @@
-import { makeUrl, defaultUrl } from '../../util/GoogleApi';
+import { makeUrl, defaultUrl } from '../../util/Script';
 
 describe('GoogleApi', () => {
   it('loads a url from google api', () => {
