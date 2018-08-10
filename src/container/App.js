@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
-import { createScript } from '../util/GApi';
+import createScript from '../util/addGapiScript';
 import Map from './Map';
 
 export default class App extends Component {
@@ -11,23 +10,25 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    if (!this.state.promise) {
+    const { promise } = this.state;
+    if (!promise) {
       this.setState({ promise: createScript() },
-        () => {
-          this.state.promise
-            .then(this.initMap)
-            .catch(this.loadMapError)
-      });
+        this.resolvePromise);
     }
   }
 
+  resolvePromise = () => {
+    const { promise } = this.state;
+    promise
+      .then(this.initMap)
+      .catch(this.loadMapError);
+  }
+
   initMap = () => {
-    console.log('teste');
-    console.log(window.google);
     this.setState({
       loaded: true,
       gmap: window.google.maps
-    })
+    });
   }
 
   loadMapError = (event) => {
@@ -35,13 +36,19 @@ export default class App extends Component {
   }
 
   render() {
+    const { loaded, gmap } = this.state;
     return (
       <div>
-        {!this.state.loaded
-          ? <div>Carregando</div>
-          : <Map
-              gmap={this.state.gmap}
-            />}
+        {!loaded
+          ? (
+            <div>
+              Carregando
+            </div>
+          )
+          : (
+            <Map gmap={gmap} />
+          )
+        }
       </div>
     );
   }
