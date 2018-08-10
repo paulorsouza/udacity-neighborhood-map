@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ReactDOM from 'react-dom'
-import ReactDOMServer from 'react-dom/server'
+import ReactDOM from '../../../../../.cache/typescript/2.9/node_modules/@types/react-dom'
+import ReactDOMServer from '../../../../../.cache/typescript/2.9/node_modules/@types/react-dom/server'
 
 export class InfoWindow extends React.Component {
 
