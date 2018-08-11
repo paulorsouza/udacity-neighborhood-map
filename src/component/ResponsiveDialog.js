@@ -9,7 +9,7 @@ import withMobileDialog from '@material-ui/core/withMobileDialog';
 
 const ResponsiveDialog = (props) => {
   const {
-    fullScreen, open, title, content, onClose
+    fullScreen, open, title, children, onClose
   } = props;
   return (
     <div>
@@ -23,7 +23,7 @@ const ResponsiveDialog = (props) => {
           {title}
         </DialogTitle>
         <DialogContent>
-          {content}
+          {children}
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose} color="primary">
@@ -39,14 +39,14 @@ ResponsiveDialog.propTypes = {
   fullScreen: PropTypes.bool.isRequired,
   open: PropTypes.bool,
   title: PropTypes.string,
-  content: PropTypes.element,
+  children: PropTypes.element,
   onClose: PropTypes.func.isRequired
 };
 
 ResponsiveDialog.defaultProps = {
   open: false,
   title: '',
-  content: <div />
+  children: <div />
 };
 
 export default withMobileDialog()(ResponsiveDialog);

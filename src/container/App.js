@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import createScript from '../util/addGapiScript';
 import Map from './Map';
 import ResponsiveDialog from '../component/ResponsiveDialog';
+import FourSquare from './FourSquare';
 
 export default class App extends Component {
   state = {
@@ -12,6 +13,7 @@ export default class App extends Component {
       open: false,
       title: false
     },
+    infoStore: new Map()
   }
 
   componentDidMount() {
@@ -64,7 +66,15 @@ export default class App extends Component {
           open={info.open}
           title={info.title}
           onClose={this.handleClose}
-        />
+        >
+          <FourSquare
+            place={{
+              name: 'Pousada Ganesh',
+              lat: -27.1513326,
+              lng: -48.4854157,
+            }}
+          />
+        </ResponsiveDialog>
         {!loaded
           ? (
             <div>
