@@ -33,7 +33,14 @@ export default class Marker extends Component {
     if (icon) {
       options = { ...options, icon };
     }
-    this.marker = new gmap.Marker({ ...options });
+    const marker = new gmap.Marker({ ...options });
+    marker.addListener('click', this.onClick);
+  }
+
+  onClick = (event) => {
+    const { name, onClick } = this.props;
+    onClick(event, name);
+    console.log(name);
   }
 
   render() {

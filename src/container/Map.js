@@ -17,7 +17,7 @@ export default class MapContainer extends Component {
   }
 
   render() {
-    const { gmap } = this.props;
+    const { gmap, onClick } = this.props;
     const { bombinhas } = this.state;
     return (
       <Map
@@ -33,6 +33,7 @@ export default class MapContainer extends Component {
             url: icons.bed,
             scaledSize: new gmap.Size(38, 38)
           }}
+          onClick={onClick}
         />
         <Marker
           name="Sushi Bar Ganesh"
@@ -51,6 +52,7 @@ export default class MapContainer extends Component {
             url: icons.iceCream,
             scaledSize: new gmap.Size(32, 32)
           }}
+          onClick={onClick}
         />
         <Marker
           name="Super Mercado Bombinhas"
@@ -60,6 +62,7 @@ export default class MapContainer extends Component {
             url: icons.cart,
             scaledSize: new gmap.Size(32, 32)
           }}
+          onClick={onClick}
         />
         <Marker
           name="Pousada Canto das Trilhas"
@@ -69,6 +72,7 @@ export default class MapContainer extends Component {
             url: icons.cabin,
             scaledSize: new gmap.Size(40, 40)
           }}
+          onClick={onClick}
         />
         <Marker
           name="Pousada Bomar Bombinhas"
@@ -78,6 +82,7 @@ export default class MapContainer extends Component {
             url: icons.hotel,
             scaledSize: new gmap.Size(32, 32)
           }}
+          onClick={onClick}
         />
         <Marker
           name="Olímpio"
@@ -87,6 +92,7 @@ export default class MapContainer extends Component {
             url: icons.food,
             scaledSize: new gmap.Size(38, 38)
           }}
+          onClick={onClick}
         />
         <Marker
           name="Apart Hotel"
@@ -96,6 +102,7 @@ export default class MapContainer extends Component {
             url: icons.hotel,
             scaledSize: new gmap.Size(32, 32)
           }}
+          onClick={onClick}
         />
         <Marker
           name="Armazém quatro ilhas"
@@ -105,6 +112,7 @@ export default class MapContainer extends Component {
             url: icons.cart,
             scaledSize: new gmap.Size(32, 32)
           }}
+          onClick={onClick}
         />
       </Map>
     );
