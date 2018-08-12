@@ -52,7 +52,7 @@ export default class Map extends Component {
     return (
       <div>
         <div
-          style={{ width: '100vw', height: '100vh' }}
+          style={{ height: '85vh' }}
           ref={(div) => { this.mapDiv = div; }}
         >
           Loading

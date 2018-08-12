@@ -4,6 +4,7 @@ import Map from './Map';
 import ResponsiveDialog from '../component/ResponsiveDialog';
 import FourSquare from './FourSquare';
 import places from '../util/places';
+import MainPage from '../component/MainPage';
 
 export default class App extends Component {
   state = {
@@ -71,13 +72,15 @@ export default class App extends Component {
             </div>
           )
           : (
-            <Map
-              gmap={gmap}
-              onClick={this.handleClick}
-              places={filteredPlaces}
-            />
+            <MainPage>
+              <Map
+                gmap={gmap}
+                onClick={this.handleClick}
+                places={filteredPlaces}
+              />
+            </MainPage>
           )
-        }
+          }
       </div>
     );
   }
