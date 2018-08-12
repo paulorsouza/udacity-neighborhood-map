@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import qs from 'qs';
 
 const CLIENT_ID = 'ZVR3MJ0VVO0AKFVBVERXJMY1HRJKQFCKPP21RTSLGYQUM4MP';
@@ -12,12 +13,17 @@ const CREDENTIALS = {
 };
 
 export default class FourSquare extends Component {
+  static propTypes = {
+    place: PropTypes.object.isRequired,
+    addMessage: PropTypes.func.isRequired
+  }
+
   state = {
     placeData: {}
   }
 
   componentDidMount() {
-    const { place } = this.props;
+    const { place, addMessage } = this.props;
     let placeData = {};
     this.search(place)
       .then(res => res.json())
@@ -45,6 +51,10 @@ export default class FourSquare extends Component {
         console.log(links);
         console.log(tips);
         this.setState({ placeData });
+      })
+      .catch((e) => {
+        console.log(e);
+        addMessage(e.message, 'error');
       });
   }
 
@@ -66,6 +76,9 @@ export default class FourSquare extends Component {
 
   normalizeInfo = (data) => {
     const info = data.response.venues[0];
+    if (!info) {
+      throw new Error('This location does not exist on Foursquare');
+    }
     const { id, name, location } = info;
     const { address } = location;
     return { id, name, address };

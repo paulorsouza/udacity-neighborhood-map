@@ -5,6 +5,7 @@ import ResponsiveDialog from '../component/ResponsiveDialog';
 import FourSquare from './FourSquare';
 import places from '../util/places';
 import AppFrame from '../component/AppFrame';
+import Message from '../component/Message';
 
 export default class App extends Component {
   state = {
@@ -13,7 +14,8 @@ export default class App extends Component {
     promise: null,
     open: false,
     filteredPlaces: places,
-    currentPlace: {}
+    currentPlace: {},
+    messages: []
   }
 
   componentDidMount() {
@@ -36,7 +38,7 @@ export default class App extends Component {
   }
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({ open: false, currentPlace: {} });
   }
 
   resolvePromise = () => {
@@ -54,7 +56,38 @@ export default class App extends Component {
   }
 
   loadMapError = (event) => {
-    console.log(event);
+    this.addMessage(event, 'error');
+  }
+
+  addMessage = (msg, variant) => {
+    const { messages } = this.state;
+    const newMessages = [...messages, {
+      msg, variant
+    }];
+    this.setState({ messages: newMessages });
+  }
+
+  renderMessages = () => {
+    const { messages } = this.state;
+    if (messages.length > 0) {
+      return messages.map((message) => {
+        const handleMessageClose = () => {
+          const msgs = messages.filter(
+            m => message.msg !== m.message
+          );
+          console.log(msgs);
+          this.setState({ messages: msgs });
+        };
+        return (
+          <Message
+            message={message.msg}
+            variant={message.variant}
+            handleClose={handleMessageClose}
+          />
+        );
+      });
+    }
+    return null;
   }
 
   render() {
@@ -63,6 +96,7 @@ export default class App extends Component {
     } = this.state;
     return (
       <div>
+        {this.renderMessages()}
         <ResponsiveDialog
           open={open}
           title={currentPlace.name}
@@ -70,6 +104,7 @@ export default class App extends Component {
         >
           <FourSquare
             place={currentPlace}
+            addMessage={this.addMessage}
           />
         </ResponsiveDialog>
         {!loaded
