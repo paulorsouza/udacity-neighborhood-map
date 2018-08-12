@@ -22,7 +22,7 @@ export default class Marker extends Component {
 
   componentDidMount() {
     const {
-      gmap, mapInstance, name, lat, lng, icon
+      gmap, mapInstance, name, lat, lng, icon, onClick
     } = this.props;
     const position = new gmap.LatLng(lat, lng);
     let options = {
@@ -34,13 +34,7 @@ export default class Marker extends Component {
       options = { ...options, icon };
     }
     const marker = new gmap.Marker({ ...options });
-    marker.addListener('click', this.onClick);
-  }
-
-  onClick = (event) => {
-    const { name, onClick } = this.props;
-    onClick(event, name);
-    console.log(name);
+    marker.addListener('click', onClick);
   }
 
   render() {

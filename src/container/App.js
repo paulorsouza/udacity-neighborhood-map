@@ -3,17 +3,16 @@ import createScript from '../util/addGapiScript';
 import Map from './Map';
 import ResponsiveDialog from '../component/ResponsiveDialog';
 import FourSquare from './FourSquare';
+import places from '../util/places';
 
 export default class App extends Component {
   state = {
     gmap: null,
     loaded: false,
     promise: null,
-    info: {
-      open: false,
-      title: false
-    },
-    infoStore: new Map()
+    open: false,
+    filteredPlaces: places,
+    currentPlace: {}
   }
 
   componentDidMount() {
@@ -24,20 +23,12 @@ export default class App extends Component {
     }
   }
 
-  handleClick = (event, name) => {
-    const info = {
-      open: true,
-      title: name
-    };
-    this.setState({ info });
+  handleClick = (place) => {
+    this.setState({ open: true, currentPlace: place });
   }
 
   handleClose = () => {
-    const info = {
-      open: false,
-      title: ''
-    };
-    this.setState({ info });
+    this.setState({ open: false });
   }
 
   resolvePromise = () => {
@@ -59,20 +50,18 @@ export default class App extends Component {
   }
 
   render() {
-    const { loaded, gmap, info } = this.state;
+    const {
+      loaded, gmap, open, filteredPlaces, currentPlace
+    } = this.state;
     return (
       <div>
         <ResponsiveDialog
-          open={info.open}
-          title={info.title}
+          open={open}
+          title={currentPlace.name}
           onClose={this.handleClose}
         >
           <FourSquare
-            place={{
-              name: 'Pousada Ganesh',
-              lat: -27.1513326,
-              lng: -48.4854157,
-            }}
+            place={currentPlace}
           />
         </ResponsiveDialog>
         {!loaded
@@ -85,6 +74,7 @@ export default class App extends Component {
             <Map
               gmap={gmap}
               onClick={this.handleClick}
+              places={filteredPlaces}
             />
           )
         }

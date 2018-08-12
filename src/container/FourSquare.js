@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import qs from 'qs';
 
 const CLIENT_ID = 'ZVR3MJ0VVO0AKFVBVERXJMY1HRJKQFCKPP21RTSLGYQUM4MP';
@@ -9,7 +9,7 @@ const CREDENTIALS = {
   client_id: CLIENT_ID,
   client_secret: CLIENT_SECRET,
   v: VERSION
-}
+};
 
 export default class FourSquare extends Component {
   state = {
@@ -49,7 +49,7 @@ export default class FourSquare extends Component {
   }
 
   getPhoto = (id) => {
-    const params = { ...CREDENTIALS, limit: 1 };
+    const params = { ...CREDENTIALS, limit: 1, group: 'venue' };
     const url = `${BASE_URL}/venues/${id}/photos?${qs.stringify(params)}`;
     return fetch(url);
   }
