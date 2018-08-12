@@ -4,7 +4,7 @@ import Map from './Map';
 import ResponsiveDialog from '../component/ResponsiveDialog';
 import FourSquare from './FourSquare';
 import places from '../util/places';
-import MainPage from '../component/MainPage';
+import AppFrame from '../component/AppFrame';
 
 export default class App extends Component {
   state = {
@@ -79,8 +79,10 @@ export default class App extends Component {
             </div>
           )
           : (
-            <MainPage
+            <AppFrame
               filterPlaces={this.filterPlaces}
+              filteredPlaces={filteredPlaces}
+              handleClick={this.handleClick}
             >
               <Map
                 gmap={gmap}
@@ -88,7 +90,7 @@ export default class App extends Component {
                 places={filteredPlaces}
                 currentPlace={currentPlace}
               />
-            </MainPage>
+            </AppFrame>
           )
           }
       </div>

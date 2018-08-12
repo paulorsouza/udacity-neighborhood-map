@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
@@ -16,7 +19,9 @@ class CustomDrawer extends Component {
     classes: PropTypes.object.isRequired,
     drawerOpen: PropTypes.bool.isRequired,
     handleDrawerClose: PropTypes.func.isRequired,
-    filterPlaces: PropTypes.func.isRequired
+    filterPlaces: PropTypes.func.isRequired,
+    filteredPlaces: PropTypes.object.isRequired,
+    onClick: PropTypes.func.isRequired
   };
 
   state = {
@@ -24,7 +29,23 @@ class CustomDrawer extends Component {
   }
 
   normalizePlaces = () => {
-    return [1, 2, 3, 4];
+    const {
+      filteredPlaces, onClick, classes
+    } = this.props;
+    return filteredPlaces.map((place) => {
+      return (
+        <ListItem
+          key={place.name}
+          dense
+          button
+          className={classes.listItem}
+          onClick={() => onClick(place)}
+        >
+          <Avatar src={place.icon} />
+          <ListItemText primary={place.name} />
+        </ListItem>
+      );
+    });
   }
 
   handleSearch = (e) => {
