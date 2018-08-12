@@ -26,10 +26,8 @@ export default class App extends Component {
 
   filterPlaces = (value) => {
     const filteredPlaces = places.filter((place) => {
-      console.log(value);
       return place.name.toLowerCase().indexOf(value.toLowerCase()) > -1;
     });
-    console.log(filteredPlaces);
     this.setState({ filteredPlaces });
   }
 
@@ -88,6 +86,7 @@ export default class App extends Component {
                 gmap={gmap}
                 onClick={this.handleClick}
                 places={filteredPlaces}
+                currentPlace={currentPlace}
               />
             </MainPage>
           )

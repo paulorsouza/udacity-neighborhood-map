@@ -8,7 +8,9 @@ export default class Marker extends Component {
     lat: PropTypes.number,
     lng: PropTypes.number,
     name: PropTypes.string,
-    icon: PropTypes.object
+    icon: PropTypes.object,
+    onClick: PropTypes.func.isRequired,
+    placeInFocus: PropTypes.string
   }
 
   static defaultProps = {
@@ -17,7 +19,8 @@ export default class Marker extends Component {
     lat: 0,
     lng: 0,
     name: '',
-    icon: null
+    icon: null,
+    placeInFocus: ''
   }
 
   componentDidMount() {
@@ -33,8 +36,25 @@ export default class Marker extends Component {
     if (icon) {
       options = { ...options, icon };
     }
-    const marker = new gmap.Marker({ ...options });
-    marker.addListener('click', onClick);
+    this.marker = new gmap.Marker({ ...options });
+    this.marker.addListener('click', onClick);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { placeInFocus, name } = nextProps;
+    if (placeInFocus === name) this.bouce();
+  }
+
+  componentWillUnmount() {
+    if (this.marker) {
+      this.marker.setMap(null);
+    }
+  }
+
+  bouce = () => {
+    const { gmap } = this.props;
+    this.marker.setAnimation(gmap.Animation.BOUNCE);
+    setTimeout(() => this.marker.setAnimation(null), 600);
   }
 
   render() {

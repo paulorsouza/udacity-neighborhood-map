@@ -5,7 +5,10 @@ import Marker from '../component/Marker';
 
 export default class MapContainer extends Component {
   static propTypes = {
-    gmap: PropTypes.object.isRequired
+    gmap: PropTypes.object.isRequired,
+    currentPlace: PropTypes.object.isRequired,
+    places: PropTypes.object.isRequired,
+    onClick: PropTypes.func.isRequired
   }
 
   state = {
@@ -21,7 +24,7 @@ export default class MapContainer extends Component {
   }
 
   renderMarker = (place) => {
-    const { gmap, onClick } = this.props;
+    const { gmap, onClick, currentPlace } = this.props;
     return (
       <Marker
         name={place.name}
@@ -32,6 +35,7 @@ export default class MapContainer extends Component {
           scaledSize: new gmap.Size(38, 38)
         }}
         onClick={() => onClick(place)}
+        placeInFocus={currentPlace.name}
       />
     );
   }
