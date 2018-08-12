@@ -78,7 +78,8 @@ const styles = theme => ({
 class MainPage extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    children: PropTypes.element
+    children: PropTypes.element,
+    filterPlaces: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -96,7 +97,7 @@ class MainPage extends Component {
   }
 
   render() {
-    const { classes, children } = this.props;
+    const { classes, children, filterPlaces } = this.props;
     const { drawerOpen } = this.state;
     return (
       <div className={classes.root}>
@@ -125,6 +126,7 @@ class MainPage extends Component {
             classes={classes}
             drawerOpen={drawerOpen}
             handleDrawerClose={this.handleDrawerClose}
+            filterPlaces={filterPlaces}
           />
           <main
             className={classNames(classes.content, {
