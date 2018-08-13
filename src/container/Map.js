@@ -7,7 +7,7 @@ export default class MapContainer extends Component {
   static propTypes = {
     gmap: PropTypes.object.isRequired,
     currentPlace: PropTypes.object.isRequired,
-    places: PropTypes.object.isRequired,
+    places: PropTypes.array.isRequired,
     onClick: PropTypes.func.isRequired
   }
 
@@ -27,6 +27,7 @@ export default class MapContainer extends Component {
     const { gmap, onClick, currentPlace } = this.props;
     return (
       <Marker
+        key={`marker-${place.name}`}
         name={place.name}
         lat={place.lat}
         lng={place.lng}

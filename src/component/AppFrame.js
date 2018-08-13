@@ -80,7 +80,7 @@ class MainPage extends Component {
     classes: PropTypes.object.isRequired,
     children: PropTypes.element,
     filterPlaces: PropTypes.func.isRequired,
-    filteredPlaces: PropTypes.object.isRequired,
+    filteredPlaces: PropTypes.array.isRequired,
     handleClick: PropTypes.func.isRequired
   };
 

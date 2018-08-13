@@ -20,7 +20,7 @@ class CustomDrawer extends Component {
     drawerOpen: PropTypes.bool.isRequired,
     handleDrawerClose: PropTypes.func.isRequired,
     filterPlaces: PropTypes.func.isRequired,
-    filteredPlaces: PropTypes.object.isRequired,
+    filteredPlaces: PropTypes.array.isRequired,
     onClick: PropTypes.func.isRequired
   };
 
