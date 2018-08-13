@@ -75,7 +75,6 @@ export default class App extends Component {
           const msgs = messages.filter(
             m => message.msg !== m.message
           );
-          console.log(msgs);
           this.setState({ messages: msgs });
         };
         return (

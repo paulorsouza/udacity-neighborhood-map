@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Typography from '@material-ui/core/Typography';
+import TipCard from '../component/TipCard';
 
 const CLIENT_ID = 'ZVR3MJ0VVO0AKFVBVERXJMY1HRJKQFCKPP21RTSLGYQUM4MP';
 const CLIENT_SECRET = 'Y51AOLBECTT0NJ3WSP11WWSHQRW4J3AEZVVBOE44NC0PKFJ2';
@@ -19,7 +22,8 @@ export default class FourSquare extends Component {
   }
 
   state = {
-    placeData: {}
+    placeData: {},
+    tips: []
   }
 
   componentDidMount() {
@@ -49,11 +53,10 @@ export default class FourSquare extends Component {
       .then(([photo, links, tips]) => {
         console.log(photo);
         console.log(links);
-        console.log(tips);
-        this.setState({ placeData });
+        const normalizedTips = this.normalizeTips(tips);
+        this.setState({ placeData, tips: normalizedTips });
       })
       .catch((e) => {
-        console.log(e);
         addMessage(e.message, 'error');
       });
   }
@@ -74,7 +77,15 @@ export default class FourSquare extends Component {
     return fetch(url);
   }
 
+  normalizeMeta = (data) => {
+    const { code, errorDetail } = data.meta;
+    if (code !== 200) {
+      throw new Error(`${code}- ${errorDetail}`);
+    }
+  }
+
   normalizeInfo = (data) => {
+    this.normalizeMeta(data);
     const info = data.response.venues[0];
     if (!info) {
       throw new Error('This location does not exist on Foursquare');
@@ -82,6 +93,20 @@ export default class FourSquare extends Component {
     const { id, name, location } = info;
     const { address } = location;
     return { id, name, address };
+  }
+
+  normalizeTips = (data) => {
+    this.normalizeMeta(data);
+    const { count, items } = data.response.tips;
+    if (count === 0) return [];
+    return items.map((item) => {
+      const { firstName, lastName } = item.user;
+      return {
+        link: item.canonicalUrl,
+        text: item.text,
+        user: `${firstName} ${lastName}`
+      };
+    });
   }
 
   search = (place) => {
@@ -95,14 +120,43 @@ export default class FourSquare extends Component {
     return fetch(url);
   }
 
+  renderTips = () => {
+    const { tips } = this.state;
+    if (tips.length === 0) {
+      return (
+        <TipCard
+          text="Without tips"
+        />
+      );
+    }
+    return tips.map((tip) => {
+      return (
+        <TipCard
+          user={tip.user}
+          link={tip.user}
+          text={tip.text}
+        />
+      );
+    });
+  }
+
   render() {
     const { placeData } = this.state;
     const { name, address } = placeData;
     return (
       <div>
-        {name}
-        <p />
-        {address}
+        {!name ? (
+          <LinearProgress
+            color="secondary"
+          />) : (
+            <div>
+              <Typography component="p">
+                {address}
+              </Typography>
+              <p />
+              {this.renderTips()}
+            </div>)
+        }
       </div>
     );
   }

@@ -33,12 +33,10 @@ export default class Map extends Component {
   renderChildren = () => {
     const { children, gmap } = this.props;
     const { mapInstance } = this.state;
-    console.log(children);
     if (!children) return <div />;
 
     return React.Children.map(children, (c) => {
       if (!c) return <div />;
-      console.log(mapInstance);
       return React.cloneElement(c, {
         mapInstance,
         gmap
